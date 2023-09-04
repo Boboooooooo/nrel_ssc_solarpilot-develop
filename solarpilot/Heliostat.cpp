@@ -181,11 +181,18 @@ void Heliostat::updateCalculatedParameters(var_map &Vm, int htnum)
 	else{
         _r_collision =
             sqrt( V->height.val * V->height.val / 4. + V->width.val * V->width.val /4. );
-		_area =
+		/*/_area =
             V->width.val * V->height.val * V->reflect_ratio.val              //width * height * structural density is the base area
             - V->x_gap.val * V->height.val * (V->n_cant_x.val - 1) - V->y_gap.val * V->width.val * (V->n_cant_y.val - 1)     //subtract off gap areas
             + (V->n_cant_y.val - 1)*(V->n_cant_x.val - 1)* V->x_gap.val * V->y_gap.val 
             ;        //but don't double-count the little squares in both gaps
+			*/
+		_area =
+			V->width.val * V->height.val
+			- V->x_gap.val * V->height.val * (V->n_cant_x.val - 1) - V->y_gap.val * V->width.val * (V->n_cant_y.val - 1)     //subtract off gap areas
+			+ (V->n_cant_y.val - 1) * (V->n_cant_x.val - 1) * V->x_gap.val * V->y_gap.val
+			;
+		_area = _area * V->reflect_ratio.val;
 	}
 
     V->area.Setval( _area );
