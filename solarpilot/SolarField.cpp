@@ -2499,7 +2499,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 		double az_ang, azmin, azmid, haz, dr_c;
         int Nhelio = 0;
 		
-		azmid = (_var_map->sf.accept_max.val + _var_map->sf.accept_min.val)/2.;	//[rad] The midpoint of the acceptance window
+		azmid = (_var_map->sf.accept_max.val + _var_map->sf.accept_min.val)/2. * D2R;	//[rad] The midpoint of the acceptance window
         int hpr=-1;  //heliostats per row are calculated after slip planes
 
 		while(r_c < radmaxt){
@@ -2557,7 +2557,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 				az_ang = 2.*atan2(daz_init, 2.*r_c);	//The angular spacing of the heliostats in the row
 				
 				//How many heliostats are in this row?
-				hpr = int(floor(fmin((_var_map->sf.accept_max.val - _var_map->sf.accept_min.val), 2.*PI)/az_ang));
+				hpr = int(floor(fmin((_var_map->sf.accept_max.val - _var_map->sf.accept_min.val) * D2R, 2.*PI)/az_ang));
 						
 				//-----calculate the position of each heliostat in the row.-----
 				//Go min to max around the arc. 
@@ -2626,7 +2626,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 		double az_ang, azmin, azmid, haz, dr_c;
 		int Nhelio = 0;
 		
-		azmid = (_var_map->sf.accept_max.val + _var_map->sf.accept_min.val)/2.;	//[rad] The midpoint of the acceptance window
+		azmid = (_var_map->sf.accept_max.val + _var_map->sf.accept_min.val)/2. * D2R;	//[rad] The midpoint of the acceptance window
 
 		//Keep track of the row positions
 		vector<double> rowpos; 
@@ -2661,7 +2661,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 				az_ang = 2.*asin(daz_init*.5/r_c);	//The angular spacing of the heliostats in the row
 				
 				//How many heliostats are in this row?
-				hpr = int(floor(fmin((_var_map->sf.accept_max.val - _var_map->sf.accept_min.val), 2.*PI)/az_ang));
+				hpr = int(floor(fmin((_var_map->sf.accept_max.val - _var_map->sf.accept_min.val) * D2R, 2.*PI)/az_ang));
 						
 				//-----calculate the position of each heliostat in the row.-----
 				//Go min to max around the arc. 
@@ -2954,7 +2954,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 
 		r_reset = .001; //rowpos.at(0);	//Hold on to the radius where the spacing has reset
 	
-		azmid = (_var_map->sf.accept_max.val + _var_map->sf.accept_min.val)/2.;	//[rad] The midpoint of the acceptance window
+		azmid = (_var_map->sf.accept_max.val + _var_map->sf.accept_min.val)/2. * D2R;	//[rad] The midpoint of the acceptance window
 		
 		for(i=0; i<nr; i++){	//For each row
 			double r_row = rowpos.at(i);	
@@ -2981,7 +2981,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 				az_ang = 2.*atan2(daz_init, 2.*r_row);	//The angular spacing of the heliostats in the row
 		
 				//How many heliostats are in this row?
-				hpr = int(floor(fmin((_var_map->sf.accept_max.val - _var_map->sf.accept_min.val), 2.*PI)/az_ang));
+				hpr = int(floor(fmin((_var_map->sf.accept_max.val - _var_map->sf.accept_min.val) * D2R, 2.*PI)/az_ang));
 						
 				//-----calculate the position of each heliostat in the row.-----
 				//Go min to max around the arc. 
