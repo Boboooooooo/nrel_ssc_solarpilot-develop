@@ -441,7 +441,9 @@ struct var_solarfield : public _vartable_base
 {
 	spvar< double > accept_max; 		//[deg] Upper bound of the angular range containing the heliostat field
 	spvar< double > accept_min; 		//[deg] Lower bound of the angular range containing the heliostat field
+	spvar< double > az_starting; 		//[deg] Starting azimuthal angular for the heliostat field layout
 	spvar< double > az_spacing; 		//[none] Azimuthal spacing factor for the first row of heliostats after a reset. Heliostats separated by heliostat width times this factor.
+	spvar< bool > is_az_starting; 		//[] Is custom starting az enabled?
 	spvar< std::string > class_name; 		//[none] Class name
 	spvar< std::string > des_sim_detail; 		//[none] Simulation detail for placing heliostats (see definitions in options spreadsheet)
 	struct DES_SIM_DETAIL{ enum EN{SUBSET_OF_DAYSHOURS=2,SINGLE_SIMULATION_POINT=1,DO_NOT_FILTER_HELIOSTATS=0,ANNUAL_SIMULATION=3,LIMITED_ANNUAL_SIMULATION=4,REPRESENTATIVE_PROFILES=5,EFFICIENCY_MAP__ANNUAL=6}; };

@@ -2496,7 +2496,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 
         //Calculate azimuthal spacing variables
 		double daz_init;	//The initial physical spacing between heliostats azimuthally
-		double az_ang, azmin, azmid, haz, dr_c;
+		double az_ang, azmin, azmid, azstart, haz, dr_c;
         int Nhelio = 0;
 		
 		azmid = (_var_map->sf.accept_max.val + _var_map->sf.accept_min.val)/2. * D2R;	//[rad] The midpoint of the acceptance window
@@ -2566,6 +2566,10 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 		
 				//Calculate the starting minimum azimuth angle
 				azmin = azmid - az_ang*hpr/2.;
+				if (_var_map->sf.is_az_starting.val)
+					azstart = _var_map->sf.az_starting.val * D2R;
+				else
+					azstart = azmin;
 			}
 
             if( hpr < 0 )
@@ -2573,7 +2577,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 
 			j=0;
 			while(j<hpr){	//For the heliostats in the row
-				haz = azmin + az_ang*double(j) + az_ang/2.*double(nr%2);	//heliostat azimuth angle
+				haz = azstart + az_ang*double(j) + az_ang/2.*double(nr%2);	//heliostat azimuth angle
 				HelPos.push_back(sp_point());
 				HelPos.at(Nhelio).x = r_c*sin(haz);
 				HelPos.at(Nhelio).y = r_c*cos(haz);
@@ -2623,7 +2627,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 
 		//Calculate azimuthal spacing variables
 		double daz_init;	//The initial physical spacing between heliostats azimuthally
-		double az_ang, azmin, azmid, haz, dr_c;
+		double az_ang, azmin, azmid, azstart, haz, dr_c;
 		int Nhelio = 0;
 		
 		azmid = (_var_map->sf.accept_max.val + _var_map->sf.accept_min.val)/2. * D2R;	//[rad] The midpoint of the acceptance window
@@ -2669,14 +2673,18 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 				//In the alternate rows, two heliostats will be evenly centered about the bisecting angle.
 		
 				//Calculate the starting minimum azimuth angle
-				azmin = azmid - az_ang*hpr/2.;
+				azmin = azmid - az_ang * hpr / 2.;
+				if (_var_map->sf.is_az_starting.val)
+					azstart = _var_map->sf.az_starting.val * D2R;
+				else
+					azstart = azmin;
 			}
             if( hpr < 0 )
                 throw spexception("An algorithmic error occurred during heliostat placement. Please contact support for debugging help.");
 
 			j=0;
 			while(j<hpr){	//For the heliostats in the row
-				haz = azmin + az_ang*double(j) + az_ang/2.*double(nr%2);	//heliostat azimuth angle
+				haz = azstart + az_ang*double(j) + az_ang/2.*double(nr%2);	//heliostat azimuth angle
 				HelPos.push_back(sp_point());
 				HelPos.at(Nhelio).x = r_c*sin(haz);
 				HelPos.at(Nhelio).y = r_c*cos(haz);
@@ -2940,7 +2948,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 		//----Now add heliostats to each row----
 
 		double daz_init;	//The initial physical spacing between heliostats azimuthally
-		double az_ang, azmin, azmid, haz;
+		double az_ang, azmin, azmid, azstart, haz;
 		int Nhelio = 0, hpr = -1;
         //initialize the heliostat template again
         {
@@ -2989,11 +2997,15 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 				//In the alternate rows, two heliostats will be evenly centered about the bisecting angle.
 		
 				//Calculate the starting minimum azimuth angle
-				azmin = azmid - az_ang*hpr/2.;
+				azmin =azmid - az_ang * hpr / 2.;
+				if (_var_map->sf.is_az_starting.val)
+					azstart = _var_map->sf.az_starting.val * D2R;
+				else
+					azstart = azmin;
 			}
 
 			for(j=0; j<hpr; j++){	//For the heliostats in the row
-				haz = azmin + az_ang*double(j) + az_ang/2.*double(i%2);	//heliostat azimuth angle
+				haz = azstart + az_ang*double(j) + az_ang/2.*double(i%2);	//heliostat azimuth angle
 				HelPos.push_back(sp_point());
 				HelPos.at(Nhelio).x = r_row*sin(haz);
 				HelPos.at(Nhelio).y = r_row*cos(haz);
