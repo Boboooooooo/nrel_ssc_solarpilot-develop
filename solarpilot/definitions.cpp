@@ -805,6 +805,8 @@ void var_solarfield::addptrs(unordered_map<std::string, spbase*> &pmap)
 {
 	_local_varptrs["solarfield.0.accept_max"] = &accept_max;
 	_local_varptrs["solarfield.0.accept_min"] = &accept_min;
+	_local_varptrs["solarfield.0.is_az_starting"] = &is_az_starting;
+	_local_varptrs["solarfield.0.az_starting"] = &az_starting;
 	_local_varptrs["solarfield.0.az_spacing"] = &az_spacing;
 	_local_varptrs["solarfield.0.class_name"] = &class_name;
 	_local_varptrs["solarfield.0.des_sim_detail"] = &des_sim_detail;
