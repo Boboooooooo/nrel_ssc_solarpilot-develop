@@ -2809,7 +2809,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
             bool is_slip = (r_c+r_0)/2./r_reset > _var_map->sf.spacing_reset.val || row_compact_switch;
 
 			//check whether the next row is outside the max bounds
-			if(r_c > radmaxt) break;
+			//if(r_c > radmaxt) break;
 
             //manage the next two rows. Call the template check for each subsequent row to ensure
             //the correct template is used for each position.
@@ -2944,6 +2944,16 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 			phi_0 = atan(_var_map->sf.tht.val/r_c);
 			r_0 = r_c;			
 		}
+
+		//check whether the last row is outside the max bounds
+		if (rowpos.back() > radmaxt)
+		{
+			rowpos.pop_back();
+			slips.pop_back();
+			nr--;
+		}
+
+
 	
 		//----Now add heliostats to each row----
 
