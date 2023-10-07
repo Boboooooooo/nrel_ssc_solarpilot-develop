@@ -67,6 +67,7 @@ double Heliostat::getAnnualEfficiency() { return eff_data.eta_annual; }
 double Heliostat::getAzimuthTrack(){return _azimuth;}
 double Heliostat::getZenithTrack(){return _zenith;}
 double Heliostat::getCollisionRadius(){return _r_collision;}
+double Heliostat::getCustomCollisionRadius() { return _r_custom_collision; }
 double Heliostat::getArea(){return _area;}
 vector<Heliostat*> *Heliostat::getNeighborList(){return _neighbors;}
 vector<sp_point> *Heliostat::getCornerCoords(){return &_corners;}
@@ -197,6 +198,8 @@ void Heliostat::updateCalculatedParameters(var_map &Vm, int htnum)
 
     V->area.Setval( _area );
     V->r_collision.Setval( _r_collision );
+
+	_r_custom_collision = V->is_cumstom_collision.val ? V->r_custom_collision.val : _r_collision;
     
     //calculate the total convolved optical error to report back
 	double err_elevation, err_azimuth, err_surface_x, err_surface_y, err_reflect_x, err_reflect_y;

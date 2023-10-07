@@ -87,6 +87,7 @@ class Heliostat : public mod_base
 		_zenith,	//[rad] Heliostat tracking zenith angle
 		_azimuth,	//[rad] Heliostat tracking azimuth angle
         _r_collision,   //[m] Collision radius of the heliostat
+		_r_custom_collision,   //[m] Custom collision radius of the heliostat
         _area,          //[m2] reflective area of the heliostat
 		_image_size_xy[2];	//[m/m] Image size on the receiver plane in {x,y}, normalized by tower height
 	std::string
@@ -147,6 +148,7 @@ public:
 	double getZenithTrack();
     double getArea();
     double getCollisionRadius();
+	double getCustomCollisionRadius();
     unordered_map<Receiver*, double>& getReceiverPowerAlloc();
 	std::vector<Heliostat*> *getNeighborList();
 	std::vector<sp_point> *getCornerCoords();

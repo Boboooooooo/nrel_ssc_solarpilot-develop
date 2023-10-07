@@ -2522,7 +2522,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
             bool is_round = Htv->is_round.mapval() == var_heliostat::IS_ROUND::ROUND;
 
 		    //Get the minimum separation between heliostats that ensures no collision
-		    double r_coll = Htemp->getCollisionRadius();    //Collision radius for current template
+		    double r_coll = Htemp->getCustomCollisionRadius();    //Collision radius for current template
 		    double hw = Htv->width.val;
 
 			//The radial separation formula is the same for both round and rectangular heliostats
@@ -2765,7 +2765,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
             H2 = Htv->height.val/2.;  //Heliostat half-height
             double W2 = Htv->width.val/2.;   //heliostat half-width
 
-            double r_coll = Htemp->getCollisionRadius();
+            double r_coll = Htemp->getCustomCollisionRadius();
             double fr = H2*2.*_var_map->sf.az_spacing.val/r_coll;
 		    //double dr_min = 2.*sqrt( pow(2.*r_coll, 2) - pow(r_coll * fr/2.,2) );
             double dr_min = 2. * sqrt( 4 * r_coll * r_coll - pow(_var_map->sf.az_spacing.val*W2, 2) );
@@ -2827,7 +2827,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
                 H2 = Htemp_r1->getVarMap()->height.val/2.;  //Heliostat half-height
 
                 //update the calculations
-                r_coll = Htemp_r1->getCollisionRadius();
+                r_coll = Htemp_r1->getCustomCollisionRadius();
                 fr = H2*2.*_var_map->sf.az_spacing.val/r_coll;
 			    
                 dr_min = sqrt( pow(2.*r_coll, 2) - pow(r_coll * fr/2.,2) ); //update calculation
@@ -2849,7 +2849,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
 				slips.push_back(false);
 				
                 //regular spacing on current row, but maintain at least the collision radius
-                r_c = max( r_c, r_half + Htemp_r2->getCollisionRadius() );
+                r_c = max( r_c, r_half + Htemp_r2->getCustomCollisionRadius() );
                 rowpos.push_back(r_c);
 				slips.push_back(true);
                 is_compact.push_back( false );  //not sure how else to handle this scenario
@@ -2968,7 +2968,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
             Htv = Htemp->getVarMap();
         }
 		double hw = Htv->width.val;
-        double r_coll = Htemp->getCollisionRadius();
+        double r_coll = Htemp->getCustomCollisionRadius();
 
 		r_reset = .001; //rowpos.at(0);	//Hold on to the radius where the spacing has reset
 	
@@ -2985,7 +2985,7 @@ void SolarField::radialStaggerPositions(vector<sp_point> &HelPos)
                 Htemp = whichTemplate(_var_map->sf.template_rule.mapval(), hloc);
                 Htv = Htemp->getVarMap();
 			    hw = Htv->width.val;	//The heliostat width
-                r_coll = Htemp->getCollisionRadius();
+                r_coll = Htemp->getCustomCollisionRadius();
             }
 
             if( is_compact.at(i) ){
@@ -3055,7 +3055,7 @@ void SolarField::cornfieldPositions(vector<sp_point> &HelPos){
 		r_coll_temp = 0,
 		r_coll_min = 9.e9; 
 	for(htemp_map::iterator it=_helio_templates.begin(); it != _helio_templates.end(); it++){
-		r_coll_temp = it->second->getCollisionRadius();
+		r_coll_temp = it->second->getCustomCollisionRadius();
 		if(r_coll_temp < r_coll_min) r_coll_min = r_coll_temp; //minimum collision radius in any combination
 	}
 
