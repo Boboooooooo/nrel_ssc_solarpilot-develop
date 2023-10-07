@@ -286,7 +286,7 @@ struct var_heliostat : public _vartable_base
 	spout< double > cant_sun_el; 		//[deg] Sun elevation angle at the moment the cant panels are focused on the receiver
 	spout< double > err_total; 		//[rad] Total convolved optical error in the reflected beam from the above sources
 	spout< double > r_collision; 		//[m] Distance between heliostat center and maximum radial extent of structure
-	spvar< bool > is_cumstom_collision; 		//[] Is custom colliusion radial enabled?
+	spvar< bool > is_custom_collision; 		//[none] Is custom colliusion radial enabled?
 	spvar< double > r_custom_collision; //[m] Custom distance between heliostat center and maximum radial extent of structure
 	spout< double > ref_total; 		//[none] Effective reflectance - product of the mirror reflectance and soiling
 

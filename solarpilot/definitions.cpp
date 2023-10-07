@@ -381,6 +381,8 @@ void var_map::add_heliostat(int id)
 	hels.back().x_gap                .set("heliostat."+sid+".x_gap"          , SP_DATTYPE::SP_DOUBLE    ,                "0.0",          "m",     true,         "",    "",    false,                  "Cant panel horiz. gap", "Separation between panels in the horizontal direction");
 	hels.back().y_focal_length       .set("heliostat."+sid+".y_focal_length" , SP_DATTYPE::SP_DOUBLE    ,             "1000.0",          "m",     true,         "",    "",    false,                      "Focal length in Y", "Reflector focal length with respect to the heliostat Y (vertical) axis");
 	hels.back().y_gap                .set("heliostat."+sid+".y_gap"          , SP_DATTYPE::SP_DOUBLE    ,                "0.0",          "m",     true,         "",    "",    false,                   "Cant panel vert. gap", "Separation between panels in the vertical direction");
+	hels.back().is_custom_collision  .set("heliostat."+sid+".is_custom_collision", SP_DATTYPE::SP_BOOL  ,                  "0",       "none",    false, "checkbox",    "",    false,  "Use custom heliostat collision radius", "User-defined distance between heliostat center and maximum radial extent of structure");
+	hels.back().r_custom_collision   .set("heliostat."+sid+".r_custom_collision", SP_DATTYPE::SP_DOUBLE ,                  "0",          "m",    false,         "",    "",    false,      "Custom heliostat collision radius", "Custom distance between heliostat center and maximum radial extent of structure");
 	hels.back().area                 .setup("heliostat."+sid+".area"           , SP_DATTYPE::SP_DOUBLE    ,                               "m2",    false,         "",    "",    false,         "Total reflective aperture area", "Aperture area including geometry penalties and gaps in the structure");
 	hels.back().cant_mag_i           .setup("heliostat."+sid+".cant_mag_i"     , SP_DATTYPE::SP_DOUBLE    ,                             "none",    false,         "",    "",    false,               "Total canting vector - i", "Total canting vector - i");
 	hels.back().cant_mag_j           .setup("heliostat."+sid+".cant_mag_j"     , SP_DATTYPE::SP_DOUBLE    ,                             "none",    false,         "",    "",    false,               "Total canting vector - j", "Total canting vector - j");
@@ -393,8 +395,6 @@ void var_map::add_heliostat(int id)
 	hels.back().cant_sun_el          .setup("heliostat."+sid+".cant_sun_el"    , SP_DATTYPE::SP_DOUBLE    ,                              "deg",    false,         "",    "",    false,               "Sun elevation at canting", "Sun elevation angle at the moment the cant panels are focused on the receiver");
 	hels.back().err_total            .setup("heliostat."+sid+".err_total"      , SP_DATTYPE::SP_DOUBLE    ,                              "rad",    false,         "",    "",    false,            "Total reflected image error", "Total convolved optical error in the reflected beam from the above sources");
 	hels.back().r_collision          .setup("heliostat."+sid+".r_collision"    , SP_DATTYPE::SP_DOUBLE    ,                                "m",    false,         "",    "",    false,             "Heliostat collision radius", "Distance between heliostat center and maximum radial extent of structure");
-	hels.back().is_cumstom_collision .set("heliostat."+sid+".is_custom_collision", SP_DATTYPE::SP_BOOL    ,               "0",          "none",    false, "checkbox",    "",    false,      "Custom heliostat collision radius", "User-defined distance between heliostat center and maximum radial extent of structure");
-	hels.back().r_custom_collision   .set("heliostat."+sid+".r_custom_collision", SP_DATTYPE::SP_DOUBLE ,                 "0",             "m",    false,         "",    "",    false,      "Custom heliostat collision radius", "Custom distance between heliostat center and maximum radial extent of structure");
 	hels.back().ref_total            .setup("heliostat."+sid+".ref_total"      , SP_DATTYPE::SP_DOUBLE    ,                             "none",    false,         "",    "",    false,              "Total optical reflectance", "Effective reflectance - product of the mirror reflectance and soiling");
 
 	hels.back().id.val = id;
@@ -654,8 +654,8 @@ void var_heliostat::addptrs(unordered_map<std::string, spbase*> &pmap)
 	_local_varptrs["heliostat."+sid+".cant_sun_el"] = &cant_sun_el;
 	_local_varptrs["heliostat."+sid+".err_total"] = &err_total;
 	_local_varptrs["heliostat."+sid+".r_collision"] = &r_collision;
-	_local_varptrs["heliostat."+sid + ".is_cumstom_collision"] = &is_cumstom_collision;
-	_local_varptrs["heliostat."+sid + ".r_custom_collision"] = &r_custom_collision;
+	_local_varptrs["heliostat."+sid+".is_custom_collision"] = &is_custom_collision;
+	_local_varptrs["heliostat."+sid+".r_custom_collision"] = &r_custom_collision;
 	_local_varptrs["heliostat."+sid+".ref_total"] = &ref_total;
 
 	for (unordered_map<std::string, spbase*>::iterator it = _local_varptrs.begin(); it != _local_varptrs.end(); it++)
