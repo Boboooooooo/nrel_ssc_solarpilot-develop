@@ -314,6 +314,7 @@ struct var_land : public _vartable_base
 	spvar< double > min_scaled_rad; 		//[none] Minimum radius (in units of tower height) for positioning of the heliostats
 	spvar< double > tower_offset_x; 		//[m] Displacement of the tower in X relative to the X-positions specified in the land table
 	spvar< double > tower_offset_y; 		//[m] Displacement of the tower in Y relative to the Y-positions specified in the land table
+	spvar< double > circular_bounds_rad; 		//[m] Radius of circular bounds included
 	spout< double > bound_area; 		//[acre] Land area occupied by heliostats. This value is the area of a convex hull surrounding the heliostat positions.
 	spout< double > land_area; 		//[acre] Land area, including solar field and multiplying factor
 	spout< double > radmax_m; 		//[m] Calculated maximum distance between tower and last row of heliostats

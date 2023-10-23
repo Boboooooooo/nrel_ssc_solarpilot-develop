@@ -224,10 +224,12 @@ void var_map::reset()
 	land.min_scaled_rad              .set("land.0.min_scaled_rad"            , SP_DATTYPE::SP_DOUBLE    ,               "0.75",       "none",     true,         "",    "",    false,                   "Minimum field radius", "Minimum radius (in units of tower height) for positioning of the heliostats");
 	land.tower_offset_x              .set("land.0.tower_offset_x"            , SP_DATTYPE::SP_DOUBLE    ,                "0.0",          "m",     true,         "",    "",    false,              "Tower location offset - X", "Displacement of the tower in X relative to the X-positions specified in the land table");
 	land.tower_offset_y              .set("land.0.tower_offset_y"            , SP_DATTYPE::SP_DOUBLE    ,                "0.0",          "m",     true,         "",    "",    false,              "Tower location offset - Y", "Displacement of the tower in Y relative to the Y-positions specified in the land table");
+	land.circular_bounds_rad         .set("land.0.circular_bounds_rad"       , SP_DATTYPE::SP_DOUBLE    ,                "3000",         "m",     true,         "",    "",    false,                 "Circular bounds radius", "Radius of circular bounds included");
 	land.bound_area                  .setup("land.0.bound_area"                , SP_DATTYPE::SP_DOUBLE    ,                             "acre",    false,         "",    "",    false,                  "Solar field land area", "Land area occupied by heliostats. This value is the area of a convex hull surrounding the heliostat positions.");
 	land.land_area                   .setup("land.0.land_area"                 , SP_DATTYPE::SP_DOUBLE    ,                             "acre",    false,         "",    "",    false,                        "Total land area", "Land area, including solar field and multiplying factor");
 	land.radmax_m                    .setup("land.0.radmax_m"                  , SP_DATTYPE::SP_DOUBLE    ,                                "m",    false,         "",    "",    false,             "Maximum heliostat distance", "Calculated maximum distance between tower and last row of heliostats");
 	land.radmin_m                    .setup("land.0.radmin_m"                  , SP_DATTYPE::SP_DOUBLE    ,                                "m",    false,         "",    "",    false,             "Minimum heliostat distance", "Calculated minimum distance between tower and first row of heliostats");
+
 
 	opt.algorithm                    .set("optimize.0.algorithm"             , SP_DATTYPE::SP_STRING    ,                "1.0",           "",     true,    "combo", "BOBYQA=0;COBYLA=1;NEWOUA=2;Nelder-Mead=3;Subplex=4;RSGS=5",     true,                 "Optimization algorithm", "Optimization algorithm");
 	opt.class_name                   .set("optimize.0.class_name"            , SP_DATTYPE::SP_STRING    ,       "Optimization",           "",    false,         "",    "",    false,                                       "", "");
@@ -687,6 +689,7 @@ void var_land::addptrs(unordered_map<std::string, spbase*> &pmap)
 	_local_varptrs["land.0.land_area"] = &land_area;
 	_local_varptrs["land.0.radmax_m"] = &radmax_m;
 	_local_varptrs["land.0.radmin_m"] = &radmin_m;
+	_local_varptrs["land.0.circular_bounds_rad"] = &circular_bounds_rad;
 
 	for (unordered_map<std::string, spbase*>::iterator it = _local_varptrs.begin(); it != _local_varptrs.end(); it++)
 		pmap[it->first] = it->second;

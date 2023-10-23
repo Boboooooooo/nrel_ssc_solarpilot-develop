@@ -57,17 +57,17 @@ bool Land::InBounds(var_land &V, sp_point &P, double tht)
 {
     //offset the point by tower x,y offset
     sp_point Po(P);
-    
+	double delta = 1.0E-6;
 	//figure out whether the given point is inside the land area described by _boundary
 	bool test = true;
 	double prad = sqrt( pow(Po.x, 2) + pow(Po.y, 2) ); //radial position of the point relative to the tower
 		
 	if(V.is_bounds_scaled.val){	//Does the point lie within the limits scaling with tower height?
-		test = (prad >= (tht*V.min_scaled_rad.val) && prad <= (tht*V.max_scaled_rad.val) );
+		test = (prad + delta >= (tht*V.min_scaled_rad.val) && prad - delta <= (tht*V.max_scaled_rad.val) );
 		if(! test) return false;
 	}
 	if(V.is_bounds_fixed.val){	//Does the point also lie within the fixed limits?
-		test = test && (prad >= V.min_fixed_rad.val && prad <= V.max_fixed_rad.val);
+		test = test && (prad + delta >= V.min_fixed_rad.val && prad - delta <= V.max_fixed_rad.val);
 		if(! test) return false;
 	}
 	if(V.is_bounds_array.val)
@@ -103,6 +103,14 @@ bool Land::InBounds(var_land &V, sp_point &P, double tht)
 			if( Toolbox::pointInPolygon(V.inclusions.val.at(i), Po) ){ intest = true; break;}
 		}
 		test = test && intest;
+
+		if (V.circular_bounds_rad.val > 0)   //if the point hasn't been shifted yet, do so now
+		{
+			double rad = sqrt(pow(Po.x, 2) + pow(Po.y, 2)); //radial position of the point relative to the tower aftter offset
+			intest = rad + delta <= V.circular_bounds_rad.val;
+		}
+		test = test && intest;
+
 	}
 	
 	return test;
